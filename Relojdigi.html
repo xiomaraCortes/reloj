@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style >
+        .clockdate-wrapper {
+    background-color: #9E64FB;
+    padding:25px;
+    width: 500px;
+    height: 100px;
+    text-align:center;
+    margin:0 auto;
+    margin-top:15%;
+    border-radius: 12px;
+    border-color: #7D50C7;
+    -webkit-box-shadow: 14px 18px 32px -16px rgba(0,0,0,0.75);
+-moz-box-shadow: 14px 18px 32px -16px rgba(0,0,0,0.75);
+box-shadow: 14px 18px 32px -16px rgba(0,0,0,0.75);
+}
+#clock{
+    border-radius: 15px;
+    margin: 0%;
+    margin-top: 12px;
+    background-color:#CCB0FB;
+    font-size:60px;
+    text-shadow:0px 0px 1px #fff;
+    color:#fff;
+}
+#clock span {
+    color:#888;
+    text-shadow:0px 0px 1px #333;
+    font-size:30px;
+    position:relative;
+    top:-27px;
+    left:-10px;
+}
+#date {
+    letter-spacing:10px;
+    font-size:14px;
+    font-family:arial,sans-serif;
+    color:#fff;
+}
+    </style>
+    <title>Reloj</title>
+</head>
+<body onload="startTime()">
+    
+</body>
+<div id="clockdate">
+    <div class="clockdate-wrapper">
+      <div id="clock"></div>
+      <div id="date"></div>
+    </div>
+  </div>
+</html>
+
+<script>
+    function startTime() {
+    var today = new Date();
+    var hr = today.getHours();
+    var min = today.getMinutes();
+    var sec = today.getSeconds();
+    //Add a zero in front of numbers<10
+    min = checkTime(min);
+    sec = checkTime(sec);
+    document.getElementById("clock").innerHTML = hr + " : " + min + " : " + sec;
+    var time = setTimeout(function(){ startTime() }, 500);
+}
+function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+</script>
+
