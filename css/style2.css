@@ -11,6 +11,7 @@ form{
 .edit{
     width: auto;
     height: 40px;
+    
 }
 
 .delete{
@@ -24,24 +25,41 @@ form{
     border: 1px solid rgba(185, 174, 174, 0.541);
     border-radius: 10px;
     z-index: 1;
+    -webkit-box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
+box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
 }
 .BtnAdd{
     position: absolute;
-    background-color:rgb(101 180 245) !important;
+    background-color:#0E61F0 !important;
     border-radius: 70% !important;
     height: 3.5rem;
     width: 3.5rem;
     margin-left: 41%;
     margin-top: -14%;
     z-index: 2;
+    -webkit-box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
+box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
 }
 .Btnup{
     position: absolute;
-    background-color:rgb(110 245 101) !important;
+    background-color:#02D968 !important;
     border-radius: 70% !important;
     height: 3.5rem;
     width: 3.5rem;
     margin-left: 37%;
     margin-top: -14%;
     z-index: 2;
+    -webkit-box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
+box-shadow: 10px 17px 22px -17px rgba(0,0,0,0.75);
+}
+
+.btnEdit{
+    background-color: #E78412 !important;
+
+}
+.btndele{
+    background-color: #FC3803 !important;
 }

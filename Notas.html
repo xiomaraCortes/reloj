@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script type="text/javascript" src=""></script>
     <script type="text/javascript" src="./js/jquery.js"></script>
-    <title>Document</title>
+    <title>Notas</title>
    </head>
 
 <body onload="startTime()">
@@ -47,7 +47,7 @@
                 <br />
                 <hr /><!-- dibujar linea de divicion -->
                 <h3>Lista de estudiantes</h3>
-                <table class="table table-borderer table-hover" id="listaProductos" style="width: 715px;">
+                <table class="table  table-hover" id="listaProductos" style="width: 715px;">
 
                 </table>
             </div>
@@ -157,8 +157,8 @@
                                     '</span></td><td><span>' 
                                     + nota + '</span></td><td><span>' + edad +
                                     '</span></td><td><button type="button" id="A'+id+
-                                    '" class="btn btn-success" onclick="editar()"><img class="edit" src="libs/img/Edit.svg"></button></td><td><button type="button" id="A'+id+
-                                    '" class="btn btn-danger" onclick="eliminarRegistro()"><img class="delete" src="libs/img/delete.png"></button></td></tr>');
+                                    '" class="btn btnEdit" onclick="editar()"><i class="fas fa-edit"></i></button></td><td><button type="button" id="A'+id+
+                                    '" class="btn btndele" onclick="eliminarRegistro()"><i class="fas fa-trash-alt"></i></button></td></tr>');
                             }
                         } else {
                             $("#listaProductos").append('<tr><td colspan="5" align="center">No Existen Estudiantes</td></tr>');
