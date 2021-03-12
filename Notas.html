@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style2.css">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script type="text/javascript" src=""></script>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <title>Notas</title>
+   </head>
+
+<body onload="startTime()">
+    <div id="container">
+        <h1>Estudiante</h1>
+        <div class="container">
+            <div class="row">
+                <form action="">
+                    <fieldset>
+						<div class="containerTabla">
+							<div class="row">
+								<div class="col-4">
+									<legend>Nombre</legend>
+									<input type="text" class="form-control" id="nombre"></input>
+								</div>
+								<div class="col-4">
+									<legend>Apellido</legend>
+									<input type="text" step="0.01" class="form-control" id="apellido"></input>
+								</div>
+								<div class="col-4">
+									<legend>Nota</legend>
+									<input type="number" step="0.01" class="form-control" id="nota"></input>
+								</div>
+								<div class="col-4">
+									<legend>Edad</legend>
+									<input type="number" step="0.01" class="form-control" id="edad"></input>
+								</div>
+							</div>
+						</div>					
+                        <button type="button" id="insertar" class="btn  BtnAdd"><i class="fas fa-plus"></i></button>
+                        <button type="button" id="listar" class="btn Btnup"><i class="fas fa-sync-alt"></i></button>
+                    </fieldset>
+                </form>
+                <br />
+                <hr /><!-- dibujar linea de divicion -->
+                <h3>Lista de estudiantes</h3>
+                <table class="table  table-hover" id="listaProductos" style="width: 715px;">
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        let nuevoId;
+        let db = openDatabase("itemDB", "1.0", "itemDB", 65535)
+
+        function limpiar() {
+            document.getElementById("nombre").value = "";
+            document.getElementById("apellido").value = "";
+            document.getElementById("edad").value = "";
+            document.getElementById("nota").value = "";
+        }
+
+        //funcionalidad de los botones
+        //eliminar registro
+        function eliminarRegistro(){
+            $(document).one('click','button[type="button"]',function(event){
+                let id= this.id;
+                let lista=[];
+                $('#listaProductos').each(function(){
+                    let celdas=$(this).find('tr.Reg_'+id);
+                    celdas.each(function(){
+                        let registro=$(this).find('span.mid');
+                        registro.each(function(){
+                            lista.push($(this).html())
+                        });
+                    });
+                });
+                nuevoId=lista[0].substr(1);
+                db.transaction(function(transaction){
+                    let sql="DELETE FROM estudiantes WHERE id="+nuevoId+";";
+                    transaction.executeSql(sql,undefined,function(){
+                        //alert("Registro eliminado, actualice la pagina")
+                    }, function(transaction,err){
+                        alert(err.message)
+                    })
+                })
+            });
+
+        };
+        //editar registro
+        function editar(){
+            $(document).one('click','button[type="button"]',function(event){
+                let id= this.id;
+                let lista=[];
+                $('#listaProductos').each(function(){
+                    let celdas=$(this).find('tr.Reg_'+id);
+                    celdas.each(function(){
+                        let registro=$(this).find('span');
+                        registro.each(function(){
+                            lista.push($(this).html())
+                        });
+                    });
+                });
+                document.getElementById("nombre").value=lista[1];
+                document.getElementById('apellido').value=lista[2];
+                document.getElementById('nota').value=lista[3];
+                document.getElementById('edad').value=lista[4];//.slice(0,-5);
+                nuevoId=lista[0].substr(1);
+            });
+
+        }
+
+        $(function () {
+            //crear a tabla de productos
+            $("#crear").click(function () {
+                db.transaction(function (transaction) {
+                    
+                    let sql = "CREATE TABLE estudiantes " + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                        "nombre VARCHAR(100) NOT NULL, " + "apellido VARCHAR(100) NOT NULL, " +
+                        "nota DECIMAL(5,2) NOT NULL," + "edad DECIMAL(5,2) NOT NULL)";
+                    transaction.executeSql(sql, undefined, function () {
+                        alert("Tabla creada")
+                    }), function (transaction, err) {
+                        alert(err.message)
+                    }
+                })
+            })
+            //cargar 
+            $("#listar").click(function () {
+                cargarDatos();
+            })
+
+            //funcion para listar y pintar productos en la pagina web
+            function cargarDatos() {
+                //receteo en caso de que exista un receteo recidual, pintar la tabla
+                $("#listaProductos").children().remove();
+                db.transaction(function (transaction) {
+                    let sql = "SELECT * FROM Estudiantes ORDER BY id DESC";
+                    transaction.executeSql(sql, undefined, function (transaction, result) {
+                        //si hay registros
+                        if (result.rows.length) {
+                            $("#listaProductos").append('<tr><th>Codigo</th><th>Nommbre</th><th>Apellido</th><th>Nota</th><th>Edad</th><th></th><th></th></tr>');
+                            for (let i = 0; i < result.rows.length; i++) {
+                                let row = result.rows.item(i);
+                                let nombre = row.nombre;
+                                let apellido = row.apellido;
+                                let id = row.id;
+                                let nota = row.nota;
+                                let edad = row.edad;
+                                $("#listaProductos").append('<tr id="fila' + id + '" class="Reg_A' + id +
+                                    '"><td><span class="mid">A' + id + '</span></td><td><span>' 
+                                    + nombre + '</span></td><td><span>' + apellido +
+                                    '</span></td><td><span>' 
+                                    + nota + '</span></td><td><span>' + edad +
+                                    '</span></td><td><button type="button" id="A'+id+
+                                    '" class="btn btnEdit" onclick="editar()"><i class="fas fa-edit"></i></button></td><td><button type="button" id="A'+id+
+                                    '" class="btn btndele" onclick="eliminarRegistro()"><i class="fas fa-trash-alt"></i></button></td></tr>');
+                            }
+                        } else {
+                            $("#listaProductos").append('<tr><td colspan="5" align="center">No Existen Estudiantes</td></tr>');
+                        }
+                    }, function (transaction, err) {
+                        alert(err.message)
+                    })
+                })
+            };
+            //insertar registro
+            $("#insertar").click(function(){
+                let nombre =$("#nombre").val();
+                let apellido=$("#apellido").val();
+                let nota =$("#nota").val();
+                let edad=$("#edad").val();
+                db.transaction(function(transaction){
+                    let sql = "INSERT INTO estudiantes(nombre,apellido,nota,edad) VALUES(?,?,?,?)";
+                    transaction.executeSql(sql,[nombre,apellido,nota,edad],function(){
+
+                    },function(transaction,err){
+                        alert(err.message);
+                    })
+                })
+                limpiar();
+                cargarDatos();
+            })
+            //modificar un registro
+            $("#modificar").click(function(){   
+                let nombre=$("#nombre").val();
+                let apellido=$("#apellido").val();
+                let nota=$("#nota").val();
+                let edad=$("#edad").val();
+                
+                db.transaction(function(transaction){
+                    let sql="UPDATE estudiantes SET nombre='"+nombre+"', apellido='"+apellido+
+                    "', nota='"+nota+"', edad='"+edad+"' WHERE id="+nuevoId+";";
+                    transaction.executeSql(sql,undefined,function(){
+                        cargarDatos();
+                        limpiar();
+                    }, function(transaction,err){
+                        alert(err.message)
+                    })
+                })
+            })
+        })
+
+
+    </script>
+</body>
+
+</html>
