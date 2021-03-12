@@ -1,0 +1,47 @@
+#container{
+    width: 715px;
+    margin: 0 auto;
+}
+h1{
+    text-align: center;
+}
+form{
+    width: 715px;
+}
+.edit{
+    width: auto;
+    height: 40px;
+}
+
+.delete{
+    width:auto;
+    height: 40px;
+}
+
+.containerTabla{
+    margin-top: 10px;
+    padding: 15px 15px 15px 15px;
+    border: 1px solid rgba(185, 174, 174, 0.541);
+    border-radius: 10px;
+    z-index: 1;
+}
+.BtnAdd{
+    position: absolute;
+    background-color:rgb(101 180 245) !important;
+    border-radius: 70% !important;
+    height: 3.5rem;
+    width: 3.5rem;
+    margin-left: 41%;
+    margin-top: -14%;
+    z-index: 2;
+}
+.Btnup{
+    position: absolute;
+    background-color:rgb(110 245 101) !important;
+    border-radius: 70% !important;
+    height: 3.5rem;
+    width: 3.5rem;
+    margin-left: 37%;
+    margin-top: -14%;
+    z-index: 2;
+}
